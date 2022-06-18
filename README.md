@@ -18,12 +18,18 @@ Install Docker
 
 Use [arkade](https://arkade.dev) to install various client tools
 
-    ark get minikube
+    ark get buildx
     ark get kubectl
     ark get kubectx
     ark get helm
     ark get devspace
+    ark get minikube
     ark get yq
+
+Enable buildx docker plugin
+
+    mkdir -p ~/.docker/cli-plugins
+    ln -s ~/.arkade/bin/buildx ~/.docker/cli-plugins/docker-buildx
 
 # Environment setup
 
