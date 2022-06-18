@@ -8,10 +8,6 @@ Inspired by this page
 
 # Software setup
 
-Install KVM
-
-* https://minikube.sigs.k8s.io/docs/drivers/kvm2/
-
 Install Docker
 
 * https://docs.docker.com/get-docker/
@@ -30,6 +26,10 @@ Enable buildx docker plugin
 
     mkdir -p ~/.docker/cli-plugins
     ln -s ~/.arkade/bin/buildx ~/.docker/cli-plugins/docker-buildx
+
+Install KVM
+
+* https://minikube.sigs.k8s.io/docs/drivers/kvm2/
 
 # Environment setup
 
