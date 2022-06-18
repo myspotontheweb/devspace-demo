@@ -1,7 +1,7 @@
 version: v1beta11
 
 images:
-  k8s-dev-demo: 
+  app:
     image: c8n.io/myspotontheweb/k8s-dev-demo
     build:
       buildKit: {}
@@ -19,7 +19,7 @@ deployments:
     - "--api-versions=networking.k8s.io/v1/Ingress"
     values:
       containers:
-      - image: image(k8s-dev-demo):tag(k8s-dev-demo) 
+      - image: image(app):tag(app)
       service:
         ports:
         - port: 8080
