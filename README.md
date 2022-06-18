@@ -23,6 +23,7 @@ Use [arkade](https://arkade.dev) to install various client tools
     ark get kubectx
     ark get helm
     ark get devspace
+    ark get yq
 
 # Environment setup
 
@@ -34,12 +35,13 @@ Start a minikube cluster
     # Install platform dependencies
     arkade install ingress-nginx --namespace ingress-nginx
 
-    # Start a loadBalancer tunnel
+    # Start a tunnel to enable services of type load balancer
     minikube tunnel
 
 # Usage
 
 Build and deploy the application
 
+    devspace use namespace demo
     devspace deploy
 
