@@ -76,12 +76,14 @@ Deploy demo application
       name: k8s-dev-demo
       namespace: argocd
     spec:
+      project: default
       destination:
         namespace: k8s-dev-demo
         server: https://kubernetes.default.svc
-      project: default
       source:
         chart: component-chart
+        repoURL: https://charts.devspace.sh
+        targetRevision: 0.8.4
         helm:
           values: |-
             containers:
@@ -96,8 +98,6 @@ Deploy demo application
               - host: k8s-dev-demo.10.108.46.216.nip.io
                 path: "/"
                 pathType: "Prefix"
-        repoURL: https://charts.devspace.sh
-        targetRevision: 0.8.4
       syncPolicy:
         automated:
           prune: true
