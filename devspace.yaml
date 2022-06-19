@@ -4,7 +4,10 @@ images:
   app:
     image: c8n.io/myspotontheweb/k8s-dev-demo
     build:
-      buildKit: {}
+      buildKit:
+        inCluster:
+          name: k8s-dev-demo
+          namespace: devspace
 
 vars:
 - name: INGRESS_IP
