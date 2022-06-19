@@ -100,7 +100,5 @@ Deploy demo application
         automated:
           prune: true
           selfHeal: true
-        syncOptions:
-        - CreateNamespace=true
     END
 
