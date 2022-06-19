@@ -51,3 +51,48 @@ Build and deploy the application
     devspace use namespace demo
     devspace deploy
 
+# ArgoCD
+
+Install argocd
+
+    ark install argocd
+    ark get argocd
+
+Deploy demo pplication
+
+    kubectl -n argocd apply -f - <<END
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: k8s-dev-demo
+      namespace: argocd
+    spec:
+      destination:
+        namespace: k8s-dev-demo
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        chart: component-chart
+        helm:
+          values: |-
+            containers:
+            - image: c8n.io/myspotontheweb/k8s-dev-demo:v1.0
+            service:
+              ports:
+              - port: 8080
+            ingress:
+              ingressClassName: nginx
+              tls: false
+              rules:
+              - host: k8s-dev-demo.10.108.46.216.nip.io
+                path: "/"
+                pathType: "Prefix"
+        repoURL: https://charts.devspace.sh
+        targetRevision: 0.8.4
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+    END
