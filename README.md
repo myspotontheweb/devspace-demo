@@ -13,10 +13,12 @@ Use [arkade](https://arkade.dev) to install various client tools
     ark get buildx
     ark get kubectl
     ark get kubectx
+    ark get kubens
     ark get helm
     ark get devspace
     ark get minikube
     ark get yq
+    ark get argocd
 
 Enable buildx docker plugin
 
@@ -49,12 +51,22 @@ Build and deploy the application
 
 # ArgoCD
 
-Install argocd
+## Installation
 
-    ark install argocd
-    ark get argocd
+Core install of ArgoCD
 
-Create a registry pull secret for new Namespace
+    kubectl create namespace argocd
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/core-install.yaml
+
+Open up the UI
+
+    kubens argocd
+    argocd login --core
+    argocd admin dashboard
+
+## Run the application
+
+Create a registry pull secret in the target namespace
 
     # Remove the old registry credentials
     rm $HOME/.docker/config.json
@@ -67,7 +79,7 @@ Create a registry pull secret for new Namespace
     kubectl --namespace k8s-dev-demo create secret generic regcred --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson
     kubectl --namespace k8s-dev-demo patch serviceaccount default -p '{"imagePullSecrets": [{"name": "regcred"}]}'
 
-Deploy demo application
+Deploy the application
 
     kubectl -n argocd apply -f - <<END
     apiVersion: argoproj.io/v1alpha1
