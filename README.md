@@ -1,10 +1,6 @@
 # k8s-dev-demo
 
-A Kubernetes Development Demo
-
-Inspired by this page
-
-* https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+A Kubernetes Development Demo that uses [Devspace](https://devspace.sh/).
 
 # Software setup
 
@@ -60,8 +56,14 @@ Install argocd
 
 Create a registry pull secret for new Namespace
 
-    kubectl create ns k8s-dev-demo
+    # Remove the old registry credentials
+    rm $HOME/.docker/config.json
+    
+    # Login to the registry
     docker login c8n.io
+
+    # Create a registry secret in the target namespace
+    kubectl create ns k8s-dev-demo
     kubectl --namespace k8s-dev-demo create secret generic regcred --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson
     kubectl --namespace k8s-dev-demo patch serviceaccount default -p '{"imagePullSecrets": [{"name": "regcred"}]}'
 
