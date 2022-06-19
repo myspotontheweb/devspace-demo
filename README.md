@@ -58,7 +58,14 @@ Install argocd
     ark install argocd
     ark get argocd
 
-Deploy demo pplication
+Create a registry pull secret for new Namespace
+
+    kubectl create ns k8s-dev-demo
+    docker login c8n.io
+    kubectl --namespace k8s-dev-demo create secret generic regcred --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson
+    kubectl --namespace k8s-dev-demo patch serviceaccount default -p '{"imagePullSecrets": [{"name": "regcred"}]}'
+
+Deploy demo application
 
     kubectl -n argocd apply -f - <<END
     apiVersion: argoproj.io/v1alpha1
@@ -96,3 +103,4 @@ Deploy demo pplication
         syncOptions:
         - CreateNamespace=true
     END
+
