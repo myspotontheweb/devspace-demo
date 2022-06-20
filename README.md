@@ -44,10 +44,9 @@ Start a minikube cluster
 
 # Usage
 
-Build and deploy the application
+A Makefile exists to run a devspace build and deploy to the "demo" namespace
 
-    devspace use namespace demo
-    devspace deploy
+    make
 
 # ArgoCD
 
