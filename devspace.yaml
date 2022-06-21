@@ -19,6 +19,9 @@ vars:
 - name: INGRESS_CLASSNAME
   question: "Please provide the desired ingress"
   default: addon-http-application-routing
+- name: TLS_CLUSTER_ISSUER
+  question: "Please provide the desired cert-manager cluster issuer"
+  default: staging-http-issuer
 
 deployments:
 - name: devspace-demo
@@ -37,7 +40,7 @@ deployments:
         annotations:
           "kubernetes.io/ingress.class": ${INGRESS_CLASSNAME}
         tls: true
-        tlsClusterIssuer: staging-http-issuer
+        tlsClusterIssuer: ${TLS_CLUSTER_ISSUER}
         rules:
         - host: devspace-demo.${CLUSTER_DNS}
           path: "/"
