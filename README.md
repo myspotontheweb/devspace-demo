@@ -48,6 +48,9 @@ A Makefile exists to run a devspace build and deploy to the "demo" namespace
 
 # ArgoCD
 
+The use of ArgoCD is entirely optional and this demo is designed to show how the Devspace component chart can be
+used as the application's helm chart. YAML generation is therefore entirely controlled by the chart values.
+
 ## Installation
 
 Core install of ArgoCD
