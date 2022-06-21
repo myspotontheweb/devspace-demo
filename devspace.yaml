@@ -2,20 +2,26 @@ version: v1beta11
 
 images:
   app:
-    image: c8n.io/myspotontheweb/k8s-dev-demo
+    image: ${REGISTRY}/myspotontheweb/devspace-demo
     build:
       buildKit:
         inCluster:
-          name: k8s-dev-demo
+          name: devspace-demo
           namespace: devspace
 
 vars:
-- name: INGRESS_IP
-  question: "Please specify IP address of the ingress controller"
-  default: 10.10.10.10 
+- name: REGISTRY
+  question: "Please provide the target Docker registry"
+  default: c8n.io
+- name: CLUSTER_DNS
+  question: "Please specify the DNS zone associated with the target k8s cluster"
+  default: XXXXXXXXXXXX.eastus.aksapp.io
+- name: INGRESS_CLASSNAME
+  question: "Please provide the desired ingress"
+  default: addon-http-application-routing
 
 deployments:
-- name: k8s-dev-demo
+- name: devspace-demo
   helm:
     componentChart: true
     templateArgs:
@@ -27,10 +33,13 @@ deployments:
         ports:
         - port: 8080
       ingress:
-        ingressClassName: nginx
-        tls: false
+        ingressClass: ${INGRESS_CLASSNAME}
+        annotations:
+          "kubernetes.io/ingress.class": ${INGRESS_CLASSNAME}
+        tls: true
+        tlsClusterIssuer: staging-http-issuer
         rules:
-        - host: k8s-dev-demo.${INGRESS_IP}.nip.io
+        - host: devspace-demo.${CLUSTER_DNS}
           path: "/"
           pathType: "Prefix"
 
