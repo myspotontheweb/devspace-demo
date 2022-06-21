@@ -1,4 +1,4 @@
-# k8s-dev-demo
+# devspace-demo
 
 A Kubernetes Development Demo that uses [Devspace](https://devspace.sh/).
 
