@@ -106,7 +106,7 @@ Deploy the application
               ingressClassName: nginx
               tls: false
               rules:
-              - host: k8s-dev-demo.10.108.46.216.nip.io
+              - host: k8s-dev-demo.$(minikube ip).nip.io
                 path: "/"
                 pathType: "Prefix"
       syncPolicy:
